@@ -67,6 +67,8 @@ void FillStringTree(TVirtualStringTree *stringTree, SQLiteHistory *HistoryDataba
 		nodeData->LastVisit = HistoryDatabase->GetLastVisit();
 	}
 
+    HistoryDatabase->FinalizeStatement();
+
 	//Включаем обновление интерфейса
 	stringTree->EndUpdate();
 }
@@ -119,8 +121,20 @@ void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
 	NodeStruct *nodeData = (NodeStruct*)DatebaseStringTree->GetNodeData(selectedNode);
 	//Удаление записи в базе данных
 	HistoryDatabase.DeleteEntry(nodeData->Id);
-    //Удаляем узел из таблицы
-	DatebaseStringTree
+	//Удаляем узел из таблицы
+	DatebaseStringTree->DeleteNode(selectedNode);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ClearHistoryClick(TObject *Sender)
+{
+	int result = Application->MessageBox(L"Вы уверены, что хотите удалить всю историю посещений?",
+							L"Удаление ВСЕЙ истории посещений", MB_YESNO);
+	if (result == IDYES)
+	{
+		HistoryDatabase.ClearHistory();
+	}
+
 }
 //---------------------------------------------------------------------------
 

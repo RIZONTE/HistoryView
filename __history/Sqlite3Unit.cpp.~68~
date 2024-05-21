@@ -24,10 +24,13 @@ std::string DateConvert(int64_t timestamp)
 
 SQLiteHistory::SQLiteHistory()
 {
+    Database = nullptr;
 	DatabaseOpened = false;
 	StatementPrepared = false;
 	Steped = false;
 }
+
+
 
 bool SQLiteHistory::OpenDatabase(const wchar_t* fileName)
 {
@@ -46,7 +49,6 @@ bool SQLiteHistory::OpenDatabase(const wchar_t* fileName)
 	if(result != SQLITE_OK)
 	{
 		sqlite3_close(Database);
-		sqlite3_free(errorMessage);
 		DatabaseOpened = false;
 		return false;
 	}
@@ -74,6 +76,19 @@ bool SQLiteHistory::PrepareStatement()
     return false;
 }
 
+
+bool SQLiteHistory::FinalizeStatement()
+{
+	if(StatementPrepared == true)
+	{
+		sqlite3_finalize(pStatement);
+		StatementPrepared = false;
+		Steped = false;
+        return true;
+	}
+	return false;
+}
+
 bool SQLiteHistory::Step()
 {
 	if(StatementPrepared)
@@ -82,6 +97,7 @@ bool SQLiteHistory::Step()
 		if(stepResult != SQLITE_ROW)
 		{
 			Steped = false;
+            sqlite3_finalize(pStatement);
 			return false;
 		}
 		Steped = true;
@@ -106,8 +122,7 @@ wchar_t* SQLiteHistory::GetUrl()
 	{
 		return (wchar_t*)sqlite3_column_text16(pStatement, 1);
 	}
-	std::wstring NoData{L"Нет данных"};
-	return NoData.data();
+	return L"Нет данных";
 }
 wchar_t* SQLiteHistory::GetTitle()
 {
@@ -115,8 +130,7 @@ wchar_t* SQLiteHistory::GetTitle()
 	{
 		return (wchar_t*)sqlite3_column_text16(pStatement, 2);
 	}
-	std::wstring NoData{L"Нет данных"};
-	return NoData.data();
+	return L"Нет данных";
 }
 int64_t SQLiteHistory::GetLastVisit()
 {
@@ -131,12 +145,28 @@ bool SQLiteHistory::DeleteEntry(uint64_t Id)
 {
 	char *errmsg; //переменная-указатель куда отправляется ошибка
 	std::string request = "DELETE FROM urls WHERE id=" + std::to_string(Id);
-	int execResult = sqlite3_exec(Database, request.c_str(), 0, &errmsg);
+	int execResult = sqlite3_exec(Database, request.c_str(), NULL, 0, &errmsg);
 	if(execResult != SQLITE_OK)
 	{
         return false;
 	}
 	return true;
+}
+
+bool SQLiteHistory::ClearHistory()
+{
+	if(DatabaseOpened)
+	{
+		char *errmsg; //переменная-указатель куда отправляется ошибка
+		std::string request = "DELETE FROM urls";
+		int execResult = sqlite3_exec(Database, request.c_str(), NULL, 0, &errmsg);
+		if(execResult != SQLITE_OK)
+		{
+			return false;
+		}
+		return true;
+	}
+    return false;
 }
 
 

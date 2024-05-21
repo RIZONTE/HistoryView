@@ -13,16 +13,21 @@ class SQLiteHistory
 {
 protected:
 	sqlite3 *Database;
-    sqlite3_stmt *pStatement;
+	sqlite3_stmt *pStatement;
+	bool DatabaseOpened;
+	bool StatementPrepared;
+    bool Steped;
 public:
-    SQLiteHistory();
-	bool OpenDatabase(wstring);
+	SQLiteHistory();
+	bool OpenDatabase(const wchar_t* fileName);
 	bool PrepareStatement();
 	bool Step();
 	uint64_t GetId();
 	wchar_t* GetUrl();
 	wchar_t* GetTitle();
 	int64_t GetLastVisit();
+	bool DeleteEntry(uint64_t Id);
+    bool ClearHistory();
 
 };
 

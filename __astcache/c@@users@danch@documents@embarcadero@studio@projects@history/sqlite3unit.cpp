@@ -24,10 +24,13 @@ std::string DateConvert(int64_t timestamp)
 
 SQLiteHistory::SQLiteHistory()
 {
+    Database = nullptr;
 	DatabaseOpened = false;
 	StatementPrepared = false;
 	Steped = false;
 }
+
+
 
 bool SQLiteHistory::OpenDatabase(const wchar_t* fileName)
 {
@@ -46,7 +49,6 @@ bool SQLiteHistory::OpenDatabase(const wchar_t* fileName)
 	if(result != SQLITE_OK)
 	{
 		sqlite3_close(Database);
-		sqlite3_free(errorMessage);
 		DatabaseOpened = false;
 		return false;
 	}
@@ -74,6 +76,7 @@ bool SQLiteHistory::PrepareStatement()
     return false;
 }
 
+
 bool SQLiteHistory::Step()
 {
 	if(StatementPrepared)
@@ -82,6 +85,7 @@ bool SQLiteHistory::Step()
 		if(stepResult != SQLITE_ROW)
 		{
 			Steped = false;
+            sqlite3_finalize(pStatement);
 			return false;
 		}
 		Steped = true;
@@ -106,8 +110,7 @@ wchar_t* SQLiteHistory::GetUrl()
 	{
 		return (wchar_t*)sqlite3_column_text16(pStatement, 1);
 	}
-	std::wstring NoData{L"Нет данных"};
-	return NoData.data();
+	return nullptr;
 }
 wchar_t* SQLiteHistory::GetTitle()
 {
@@ -115,8 +118,7 @@ wchar_t* SQLiteHistory::GetTitle()
 	{
 		return (wchar_t*)sqlite3_column_text16(pStatement, 2);
 	}
-	std::wstring NoData{L"Нет данных"};
-	return NoData.data();
+	return nullptr;
 }
 int64_t SQLiteHistory::GetLastVisit()
 {

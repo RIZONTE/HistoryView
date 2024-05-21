@@ -53,19 +53,23 @@ void FillStringTree(TVirtualStringTree *stringTree, SQLiteHistory *HistoryDataba
 
 	for(ULONGLONG i=0; i<10000; i++)
 	{
-		//Добавляем очередную запись
-		PVirtualNode entryNode = stringTree->AddChild(stringTree->RootNode);
+        if(HistoryDatabase->Step())
+		{
+			//Добавляем очередную запись
+			PVirtualNode entryNode = stringTree->AddChild(stringTree->RootNode);
 
-		//Заполняем данные узла
-		NodeStruct *nodeData = (NodeStruct*)stringTree->GetNodeData(entryNode);
+			//Заполняем данные узла
+			NodeStruct *nodeData = (NodeStruct*)stringTree->GetNodeData(entryNode);
 
-		HistoryDatabase->Step();
-
-		nodeData->Id = HistoryDatabase->GetId();
-		nodeData->Url = HistoryDatabase->GetUrl();
-		nodeData->Title = HistoryDatabase->GetTitle();
-		nodeData->LastVisit = HistoryDatabase->GetLastVisit();
+			nodeData->Id = HistoryDatabase->GetId();
+			nodeData->Url = HistoryDatabase->GetUrl();
+			nodeData->Title = HistoryDatabase->GetTitle();
+			nodeData->LastVisit = HistoryDatabase->GetLastVisit();
+		}
+        else break;
 	}
+
+	//HistoryDatabase->FinalizeStatement();
 
 	//Включаем обновление интерфейса
 	stringTree->EndUpdate();
@@ -119,6 +123,20 @@ void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
 	NodeStruct *nodeData = (NodeStruct*)DatebaseStringTree->GetNodeData(selectedNode);
 	//Удаление записи в базе данных
 	HistoryDatabase.DeleteEntry(nodeData->Id);
+	//Удаляем узел из таблицы
+	DatebaseStringTree->DeleteNode(selectedNode);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ClearHistoryClick(TObject *Sender)
+{
+	int result = Application->MessageBox(L"Вы уверены, что хотите удалить всю историю посещений?",
+							L"Удаление ВСЕЙ истории посещений", MB_YESNO);
+	if (result == IDYES)
+	{
+		HistoryDatabase.ClearHistory();
+	}
+
 }
 //---------------------------------------------------------------------------
 
