@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'MainForm'
-  ClientHeight = 426
+  ClientHeight = 526
   ClientWidth = 700
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,7 +13,7 @@ object MainForm: TMainForm
   TextHeight = 15
   object FilePathLabel: TLabel
     Left = 8
-    Top = 243
+    Top = 323
     Width = 151
     Height = 20
     BiDiMode = bdLeftToRight
@@ -31,7 +31,7 @@ object MainForm: TMainForm
   end
   object LastVisit: TLabel
     Left = 8
-    Top = 200
+    Top = 280
     Width = 200
     Height = 20
     Caption = #1044#1072#1090#1072' '#1087#1086#1089#1083#1077#1076#1085#1077#1075#1086' '#1087#1086#1089#1077#1097#1077#1085#1080#1103
@@ -46,7 +46,7 @@ object MainForm: TMainForm
     Left = 0
     Top = 0
     Width = 700
-    Height = 194
+    Height = 257
     ParentCustomHint = False
     Align = alTop
     BiDiMode = bdLeftToRight
@@ -72,7 +72,6 @@ object MainForm: TMainForm
     OnGetText = DatebaseStringTreeGetText
     Touch.InteractiveGestures = [igPan, igPressAndTap]
     Touch.InteractiveGestureOptions = [igoPanSingleFingerHorizontal, igoPanSingleFingerVertical, igoPanInertia, igoPanGutter, igoParentPassthrough]
-    ExplicitWidth = 651
     Columns = <
       item
         Color = clWhite
@@ -101,8 +100,8 @@ object MainForm: TMainForm
       end>
   end
   object OpenDatabaseButton: TButton
-    Left = 16
-    Top = 288
+    Left = 8
+    Top = 368
     Width = 153
     Height = 41
     Caption = #1054#1090#1082#1088#1099#1090#1100' '#1073#1072#1079#1091' '#1076#1072#1085#1085#1099#1093
@@ -116,8 +115,8 @@ object MainForm: TMainForm
     OnClick = OpenDatabaseButtonClick
   end
   object FillNode: TButton
-    Left = 184
-    Top = 288
+    Left = 176
+    Top = 368
     Width = 153
     Height = 41
     Caption = #1047#1072#1087#1086#1083#1085#1080#1090#1100' '#1090#1072#1073#1083#1080#1094#1091
@@ -131,8 +130,8 @@ object MainForm: TMainForm
     OnClick = FillNodeClick
   end
   object DeleteButton: TButton
-    Left = 352
-    Top = 288
+    Left = 344
+    Top = 368
     Width = 153
     Height = 41
     Caption = #1059#1076#1072#1083#1080#1090#1100' '#1079#1072#1087#1080#1089#1100
@@ -143,10 +142,11 @@ object MainForm: TMainForm
     Font.Style = []
     ParentFont = False
     TabOrder = 3
+    OnClick = DeleteButtonClick
   end
-  object Button1: TButton
-    Left = 520
-    Top = 289
+  object ClearHistory: TButton
+    Left = 512
+    Top = 369
     Width = 153
     Height = 41
     Caption = #1054#1095#1080#1089#1090#1080#1090#1100' '#1080#1089#1090#1086#1088#1080#1102
@@ -159,7 +159,7 @@ object MainForm: TMainForm
     TabOrder = 4
   end
   object OpenDBdialog: TOpenDialog
-    Left = 72
-    Top = 344
+    Left = 64
+    Top = 432
   end
 end

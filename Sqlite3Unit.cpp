@@ -127,5 +127,17 @@ int64_t SQLiteHistory::GetLastVisit()
 	return 1;
 }
 
+bool SQLiteHistory::DeleteEntry(uint64_t Id)
+{
+	char *errmsg; //переменная-указатель куда отправляется ошибка
+	std::string request = "DELETE FROM urls WHERE id=" + std::to_string(Id);
+	int execResult = sqlite3_exec(Database, request.c_str(), NULL, 0, &errmsg);
+	if(execResult != SQLITE_OK)
+	{
+        return false;
+	}
+	return true;
+}
+
 
 

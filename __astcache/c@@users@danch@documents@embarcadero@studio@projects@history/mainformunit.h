@@ -25,12 +25,13 @@ __published:	// IDE-managed Components
 	TLabel *LastVisit;
 	TButton *FillNode;
 	TButton *DeleteButton;
-	TButton *Button1;
+	TButton *ClearHistory;
 	void __fastcall OpenDatabaseButtonClick(TObject *Sender);
 	void __fastcall FillNodeClick(TObject *Sender);
 	void __fastcall DatebaseStringTreeGetText(TBaseVirtualTree *Sender, PVirtualNode Node,
           TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText);
 	void __fastcall DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender, PVirtualNode Node);
+	void __fastcall DeleteButtonClick(TObject *Sender);
 
 
 private:	// User declarations

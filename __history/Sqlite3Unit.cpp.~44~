@@ -76,32 +76,55 @@ bool SQLiteHistory::PrepareStatement()
 
 bool SQLiteHistory::Step()
 {
-	int stepResult = SQLITE_DONE;
-
-    stepResult = sqlite3_step(pStatement);
-	if(stepResult != SQLITE_ROW)
+	if(StatementPrepared)
 	{
-		return false;
+		int stepResult = sqlite3_step(pStatement);
+		if(stepResult != SQLITE_ROW)
+		{
+			Steped = false;
+			return false;
+		}
+		Steped = true;
+		return true;
 	}
-    else return true;
+    Steped = false;
+	return false;
 }
 
 uint64_t SQLiteHistory::GetId()
 {
-	return sqlite3_column_int64(pStatement, 0);
+	if(Steped == true)
+	{
+		return sqlite3_column_int64(pStatement, 0);
+	}
+    return 1;
 }
 
 wchar_t* SQLiteHistory::GetUrl()
 {
-	return (wchar_t*)sqlite3_column_text16(pStatement, 1);
+	if(Steped == true)
+	{
+		return (wchar_t*)sqlite3_column_text16(pStatement, 1);
+	}
+	std::wstring NoData{L"Нет данных"};
+	return NoData.data();
 }
 wchar_t* SQLiteHistory::GetTitle()
 {
-	return (wchar_t*)sqlite3_column_text16(pStatement, 2);
+	if(Steped == true)
+	{
+		return (wchar_t*)sqlite3_column_text16(pStatement, 2);
+	}
+	std::wstring NoData{L"Нет данных"};
+	return NoData.data();
 }
 int64_t SQLiteHistory::GetLastVisit()
 {
-	return sqlite3_column_int64(pStatement, 3);
+	if(Steped == true)
+	{
+        return sqlite3_column_int64(pStatement, 3);
+	}
+	return 1;
 }
 
 

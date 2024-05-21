@@ -94,14 +94,33 @@ void __fastcall TMainForm::DatebaseStringTreeGetText(TBaseVirtualTree *Sender, P
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender,
           PVirtualNode Node)
-{   //Эта функция определяет
+{   //Эта функция определяет, что будет производиться при выделении узла
 	if(!Node) return;    //Проверка что выбранная ячейка не пустая
+
+	//Создаем указатель с типом созданной структуры узла для обращения к полям узла
 	NodeStruct *nodeData = (NodeStruct*)Sender->GetNodeData(Node);
-	//Изменяем свойство Caption у Name
+
+    //Вывод доп. инф.
 	UnicodeString date = L"Дата последнего посещения: ";
 	date += DateConvert(nodeData->LastVisit).c_str();
+    //Изменяем свойство Caption у Name, отображаем доп. инф.
 	LastVisit->Caption = date.c_str();
 
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
+{
+	//Получаем выделенный узел
+	PVirtualNode selectedNode = DatebaseStringTree->FocusedNode;
+	if(!selectedNode) return;   //Проверка, что узел получен
+    //Создаем указатель с типом созданной структуры узла для обращения к полям узла
+	NodeStruct *nodeData = (NodeStruct*)DatebaseStringTree->GetNodeData(selectedNode);
+	//Удаление записи в базе данных
+	HistoryDatabase.DeleteEntry(nodeData->Id);
+    //Удаляем узел из таблицы
+	DatebaseStringTree->DeleteNode(selectedNode);
 }
 //---------------------------------------------------------------------------
 

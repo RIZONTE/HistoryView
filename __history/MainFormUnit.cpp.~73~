@@ -24,16 +24,16 @@ __fastcall TMainForm::TMainForm(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::OpenDatabaseButtonClick(TObject *Sender)
 {
-	wstring fileName;
+	UnicodeString fileName;
 	if(OpenDBdialog->Execute())
 	{
 		fileName = OpenDBdialog->FileName;
 	}
 
-	if(!fileName.empty())
+	if(!fileName.IsEmpty())
 	{
 		FilePathLabel->Caption = fileName.c_str();
-		bool res =  HistoryDatabase.OpenDatabase(fileName.data());
+		bool res =  HistoryDatabase.OpenDatabase(fileName.c_str() );
 		if(!res)
 		{
 			Application->MessageBox(L"Ошибка открытия базы данных", L"Ошибка", MB_OK);
@@ -41,7 +41,7 @@ void __fastcall TMainForm::OpenDatabaseButtonClick(TObject *Sender)
     }
 }
 //---------------------------------------------------------------------------
-void FillStringTree(TVirtualStringTree *stringTree)
+void FillStringTree(TVirtualStringTree *stringTree, SQLiteHistory *HistoryDatabase)
 {
 	//Останавливаем обновление интерфейса
 	stringTree->BeginUpdate();
@@ -49,7 +49,7 @@ void FillStringTree(TVirtualStringTree *stringTree)
 	//Очистить дерево
 	stringTree->Clear();
 
-
+	HistoryDatabase->PrepareStatement();
 
 	for(ULONGLONG i=0; i<10000; i++)
 	{
@@ -59,11 +59,12 @@ void FillStringTree(TVirtualStringTree *stringTree)
 		//Заполняем данные узла
 		NodeStruct *nodeData = (NodeStruct*)stringTree->GetNodeData(entryNode);
 
+		HistoryDatabase->Step();
 
-		nodeData->Id = i;
-		nodeData->Url = L"Url страницы:" + UnicodeString(i);
-		nodeData->Title = L"Title страницы:" + UnicodeString(i);
-		nodeData->LastVisit = 13265135471004372;
+		nodeData->Id = HistoryDatabase->GetId();
+		nodeData->Url = HistoryDatabase->GetUrl();
+		nodeData->Title = HistoryDatabase->GetTitle();
+		nodeData->LastVisit = HistoryDatabase->GetLastVisit();
 	}
 
 	//Включаем обновление интерфейса
@@ -72,7 +73,7 @@ void FillStringTree(TVirtualStringTree *stringTree)
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::FillNodeClick(TObject *Sender)
 {
-	FillStringTree(DatebaseStringTree);
+	FillStringTree(DatebaseStringTree, &HistoryDatabase);
 }
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DatebaseStringTreeGetText(TBaseVirtualTree *Sender, PVirtualNode Node,
@@ -93,14 +94,28 @@ void __fastcall TMainForm::DatebaseStringTreeGetText(TBaseVirtualTree *Sender, P
 //---------------------------------------------------------------------------
 void __fastcall TMainForm::DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender,
           PVirtualNode Node)
-{   //Эта функция определяет
+{   //Эта функция определяет, что будет производиться при выделении узла
 	if(!Node) return;    //Проверка что выбранная ячейка не пустая
+	//Создаем указатель с типом созданной структуры узла для обращения к полям узла
 	NodeStruct *nodeData = (NodeStruct*)Sender->GetNodeData(Node);
-	//Изменяем свойство Caption у Name
 	UnicodeString date = L"Дата последнего посещения: ";
 	date += DateConvert(nodeData->LastVisit).c_str();
+    //Изменяем свойство Caption у Name, отображаем доп. инф.
 	LastVisit->Caption = date.c_str();
 
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
+{
+	//Получаем выделенный узел
+	PVirtualNode selectedNode = DatebaseStringTree->FocusedNode;
+	if(!selectedNode) return;   //Проверка, что узел получен
+    //Создаем указатель с типом созданной структуры узла для обращения к полям узла
+	NodeStruct *nodeData = (NodeStruct*)DatebaseStringTree->GetNodeData(selectedNode);
+	//Удаление записи в базе данных
+	HistoryDatabase.DeleteEntry(nodeData->Id);
 }
 //---------------------------------------------------------------------------
 

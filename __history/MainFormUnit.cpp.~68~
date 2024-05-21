@@ -27,13 +27,13 @@ void __fastcall TMainForm::OpenDatabaseButtonClick(TObject *Sender)
 	UnicodeString fileName;
 	if(OpenDBdialog->Execute())
 	{
-		fileName = OpenDBdialog->FileName.c_str();
+		fileName = OpenDBdialog->FileName;
 	}
 
-	if(!fileName.empty())
+	if(!fileName.IsEmpty())
 	{
 		FilePathLabel->Caption = fileName.c_str();
-		bool res =  HistoryDatabase.OpenDatabase(fileName);
+		bool res =  HistoryDatabase.OpenDatabase(fileName.c_str() );
 		if(!res)
 		{
 			Application->MessageBox(L"Ошибка открытия базы данных", L"Ошибка", MB_OK);
@@ -96,12 +96,22 @@ void __fastcall TMainForm::DatebaseStringTreeAddToSelection(TBaseVirtualTree *Se
           PVirtualNode Node)
 {   //Эта функция определяет
 	if(!Node) return;    //Проверка что выбранная ячейка не пустая
+    //Создаем указатель с типом созданной структуры узла для обращения к полям узла
 	NodeStruct *nodeData = (NodeStruct*)Sender->GetNodeData(Node);
-	//Изменяем свойство Caption у Name
 	UnicodeString date = L"Дата последнего посещения: ";
 	date += DateConvert(nodeData->LastVisit).c_str();
+    //Изменяем свойство Caption у Name, отображаем доп. инф.
 	LastVisit->Caption = date.c_str();
 
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
+{
+	PVirualNode selectedNode = DatebaseStringTree->FocusedNode;
+
+    DeleteEntry();
 }
 //---------------------------------------------------------------------------
 

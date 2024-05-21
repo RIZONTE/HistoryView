@@ -26,6 +26,7 @@ public:
 	wchar_t* GetUrl();
 	wchar_t* GetTitle();
 	int64_t GetLastVisit();
+	bool DeleteEntry(uint64_t Id);
 
 };
 
