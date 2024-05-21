@@ -1,0 +1,46 @@
+//---------------------------------------------------------------------------
+
+#ifndef MainFormUnitH
+#define MainFormUnitH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include "VirtualTrees.AncestorVCL.hpp"
+#include "VirtualTrees.BaseAncestorVCL.hpp"
+#include "VirtualTrees.BaseTree.hpp"
+#include "VirtualTrees.hpp"
+#include <Vcl.Dialogs.hpp>
+//---------------------------------------------------------------------------
+class TMainForm : public TForm
+{
+__published:	// IDE-managed Components
+	TVirtualStringTree *DatebaseStringTree;
+	TButton *OpenButton;
+	TOpenDialog *OpenDBdialog;
+	TLabel *FilePathLabel;
+	TLabel *LastVisit;
+	TButton *FillNode;
+	void __fastcall OpenButtonClick(TObject *Sender);
+	void __fastcall FillNodeClick(TObject *Sender);
+	void __fastcall DatebaseStringTreeGetText(TBaseVirtualTree *Sender, PVirtualNode Node,
+          TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText);
+	void __fastcall DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender, PVirtualNode Node);
+
+
+private:	// User declarations
+public:		// User declarations
+	__fastcall TMainForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TMainForm *MainForm;
+//---------------------------------------------------------------------------
+typedef struct
+{
+	ULONGLONG Id;
+	UnicodeString Url;
+	UnicodeString Title;
+	LONGLONG LastVisit;
+} NodeStruct;
+#endif

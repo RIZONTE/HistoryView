@@ -1,0 +1,31 @@
+//---------------------------------------------------------------------------
+
+#ifndef Sqlite3UnitH
+#define Sqlite3UnitH
+//---------------------------------------------------------------------------
+#include <iostream>
+#include "sqlite3.h"
+
+char* DateConvert(int64_t timestamp);
+
+
+class SQLiteHistory
+{
+protected:
+	sqlite3 *Database;
+    sqlite3_stmt *pStatement;
+public:
+    SQLiteHistory();
+	bool OpenDatabase(const wchar_t* fileName);
+	bool PrepareStatement(const wchar_t* request);
+	bool Step();
+	uint64_t GetId();
+	wchar_t* GetUrl();
+	wchar_t* GetTitle();
+	int64_t GetLastVisit();
+
+};
+
+
+
+#endif

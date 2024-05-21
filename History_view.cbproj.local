@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.451,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\sqlite3.c</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.670,C:\Users\danch\Documents\Embarcadero\Studio\Projects\Unit4.h=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.349,C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.h=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\MainFormUnit.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.349,C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.cpp=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\MainFormUnit.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.670,C:\Users\danch\Documents\Embarcadero\Studio\Projects\Unit4.dfm=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.670,C:\Users\danch\Documents\Embarcadero\Studio\Projects\Unit4.cpp=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.769,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\Unit4.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.097,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\Unit4.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.696,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\Project2PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.616,C:\Users\danch\Documents\Embarcadero\Studio\Projects\Project2PCH1.h=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\History_viewPCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.653,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.355,C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit1.cpp=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Sqlite3Unit.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.698,C:\Users\danch\Documents\Embarcadero\Studio\Projects\Project2.cbproj=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\History_view.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.349,C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit4.dfm=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\MainFormUnit.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.355,C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Unit1.h=C:\Users\danch\Documents\Embarcadero\Studio\Projects\History\Sqlite3Unit.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.010,=C:\Users\danch\Documents\Embarcadero\Studio\Projects\Project2PCH1.h</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="History_view.cpp"/>
+    <File Path="History_viewPCH1.h"/>
+    <File Path="MainFormUnit.cpp"/>
+    <File Path="MainFormUnit.cpp"/>
+    <File Path="MainFormUnit.dfm"/>
+    <File Path="MainFormUnit.h"/>
+    <File Path="sqlite3.c"/>
+    <File Path="Sqlite3Unit.cpp"/>
+    <File Path="Sqlite3Unit.cpp"/>
+    <File Path="Sqlite3Unit.h"/>
+  </ProjectSortOrder>
+</BorlandProject>
