@@ -96,8 +96,11 @@ void __fastcall TMainForm::DatebaseStringTreeAddToSelection(TBaseVirtualTree *Se
           PVirtualNode Node)
 {   //Эта функция определяет, что будет производиться при выделении узла
 	if(!Node) return;    //Проверка что выбранная ячейка не пустая
+
 	//Создаем указатель с типом созданной структуры узла для обращения к полям узла
 	NodeStruct *nodeData = (NodeStruct*)Sender->GetNodeData(Node);
+
+    //Вывод доп. инф.
 	UnicodeString date = L"Дата последнего посещения: ";
 	date += DateConvert(nodeData->LastVisit).c_str();
     //Изменяем свойство Caption у Name, отображаем доп. инф.
@@ -116,6 +119,16 @@ void __fastcall TMainForm::DeleteButtonClick(TObject *Sender)
 	NodeStruct *nodeData = (NodeStruct*)DatebaseStringTree->GetNodeData(selectedNode);
 	//Удаление записи в базе данных
 	HistoryDatabase.DeleteEntry(nodeData->Id);
+	//Удаляем узел из таблицы
+	DatebaseStringTree->DeleteNode(selectedNode);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::ClearHistoryClick(TObject *Sender)
+{
+	Application->MessageBox(L"Вы уверены, что хотите удалить всю историю посещений?",
+							L"Удаление ВСЕЙ истории посещений", MB_YESNO);
+    HistoryDatabase.ClearHistory();
 }
 //---------------------------------------------------------------------------
 

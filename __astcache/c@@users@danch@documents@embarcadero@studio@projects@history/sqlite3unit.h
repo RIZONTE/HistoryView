@@ -27,6 +27,7 @@ public:
 	wchar_t* GetTitle();
 	int64_t GetLastVisit();
 	bool DeleteEntry(uint64_t Id);
+    bool ClearHistory();
 
 };
 

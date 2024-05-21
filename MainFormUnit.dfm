@@ -2,8 +2,8 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = 'MainForm'
-  ClientHeight = 526
-  ClientWidth = 700
+  ClientHeight = 517
+  ClientWidth = 694
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -45,7 +45,7 @@ object MainForm: TMainForm
   object DatebaseStringTree: TVirtualStringTree
     Left = 0
     Top = 0
-    Width = 700
+    Width = 694
     Height = 257
     ParentCustomHint = False
     Align = alTop
@@ -157,6 +157,7 @@ object MainForm: TMainForm
     Font.Style = []
     ParentFont = False
     TabOrder = 4
+    OnClick = ClearHistoryClick
   end
   object OpenDBdialog: TOpenDialog
     Left = 64

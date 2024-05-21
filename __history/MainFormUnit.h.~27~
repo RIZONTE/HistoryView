@@ -12,25 +12,31 @@
 #include "VirtualTrees.BaseTree.hpp"
 #include "VirtualTrees.hpp"
 #include <Vcl.Dialogs.hpp>
+
+#include "Sqlite3Unit.h"
 //---------------------------------------------------------------------------
 class TMainForm : public TForm
 {
 __published:	// IDE-managed Components
 	TVirtualStringTree *DatebaseStringTree;
-	TButton *OpenButton;
+	TButton *OpenDatabaseButton;
 	TOpenDialog *OpenDBdialog;
 	TLabel *FilePathLabel;
 	TLabel *LastVisit;
 	TButton *FillNode;
-	void __fastcall OpenButtonClick(TObject *Sender);
+	TButton *DeleteButton;
+	TButton *ClearHistory;
+	void __fastcall OpenDatabaseButtonClick(TObject *Sender);
 	void __fastcall FillNodeClick(TObject *Sender);
 	void __fastcall DatebaseStringTreeGetText(TBaseVirtualTree *Sender, PVirtualNode Node,
           TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText);
 	void __fastcall DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender, PVirtualNode Node);
+	void __fastcall DeleteButtonClick(TObject *Sender);
 
 
 private:	// User declarations
 public:		// User declarations
+    SQLiteHistory HistoryDatabase;
 	__fastcall TMainForm(TComponent* Owner);
 };
 //---------------------------------------------------------------------------

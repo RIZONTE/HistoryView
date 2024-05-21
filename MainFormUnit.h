@@ -32,6 +32,7 @@ __published:	// IDE-managed Components
           TColumnIndex Column, TVSTTextType TextType, UnicodeString &CellText);
 	void __fastcall DatebaseStringTreeAddToSelection(TBaseVirtualTree *Sender, PVirtualNode Node);
 	void __fastcall DeleteButtonClick(TObject *Sender);
+	void __fastcall ClearHistoryClick(TObject *Sender);
 
 
 private:	// User declarations
